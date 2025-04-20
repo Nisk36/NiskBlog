@@ -14,6 +14,20 @@ export const getAllPosts = async () => {
 
     const allPosts = posts.results;
 
-    return allPosts;
+    return allPosts.map((post : any) => {
+      return getPageMetaData(post);
+    });
+}
+
+const getPageMetaData = (post : any) => {
+  console.log("post", post);
+
+  return {
+    id: post.id,
+    title: post.properties.Name.title[0].plain_text,//日本語入ってんの気持ちわりぃ～
+    description: post.properties.Description.rich_text[0].plain_text,
+    data: post.properties.Date.date.start,
+    slug: post.properties.Slug.rich_text[0].plain_text,
+  }
 }
 
